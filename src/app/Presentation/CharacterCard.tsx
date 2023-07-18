@@ -7,7 +7,7 @@ import {
     Typography,
 } from '@mui/material';
 import React from 'react';
-import { Character } from '../data/interface';
+import { Character } from '../data/model/interface';
   
   export const CharacterCard: React.FC<{ character: Character }> = (props) => {
     return (
@@ -40,9 +40,7 @@ import { Character } from '../data/interface';
             onClick={() => window.open(props.character.url, '_blank')}
           >
             Open Card
-          </Button>
-          {/* <Button size='small'>Share</Button>
-          <Button size='small'>Like</Button> */}
+          </Button>          
         </CardActions>
       </Card>
     );

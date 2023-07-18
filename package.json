@@ -30,6 +30,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^4.29.25"
+    "@tanstack/eslint-plugin-query": "^4.29.25",
+    "@testing-library/react": "^14.0.0"
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { CharactersPage } from "./Presentation/CharactersPage";
+import { CharactersPage } from "./presentation/CharactersPage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";

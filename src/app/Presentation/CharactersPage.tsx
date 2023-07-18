@@ -1,4 +1,4 @@
-"use client"; // This is a client component 👈🏽
+"use client"; 
 
 import React, { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { CharacterCard } from "../Presentation/CharacterCard";
+import { CharacterCard } from "./CharacterCard";
 import styled from "@emotion/styled";
 import { ErrorPopup } from "./ErrorPopup";
 
