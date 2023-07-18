@@ -1,13 +1,20 @@
 "use client"; // This is a client component 👈🏽
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { fetchCharacters } from "../api/RickAndMortyAPIClient";
 import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
-import { Button, Grid, TextField } from "@mui/material";
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { CharacterCard } from "../Presentation/CharacterCard";
 import styled from "@emotion/styled";
+import { ErrorPopup } from "./ErrorPopup";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -38,6 +45,7 @@ const SectionDivider = styled.div`
 export const CharactersPage: React.FC = () => {
   const [item, setItem] = useState("");
   const [page, setPage] = useState(1);
+  const [loadingStatus, setLoadingStatus] = useState(false);
 
   const { status, data, refetch } = useQuery(
     ["characters", page], //["characters", item] real time query
@@ -46,11 +54,21 @@ export const CharactersPage: React.FC = () => {
 
   console.log("data", data, data?.error);
 
+  useEffect(() => {
+    setLoadingStatus(status === "loading");
+  }, [status]);
+
   const handleFilter = () => {
     refetch();
     setPage(1);
 
     console.log(item);
+  };
+
+  const handleError = () => {
+    setPage(1);
+    setItem("");
+    refetch();
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -61,11 +79,17 @@ export const CharactersPage: React.FC = () => {
     <CharactersPageContainer>
       <>
         {status === "loading" ? (
-          <Typography variant="h6">LOADING...</Typography>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loadingStatus}
+            onClick={() => setLoadingStatus(false)}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         ) : null}
 
         {data?.error ? (
-          <Typography variant="h6">{data?.error}</Typography>
+          <Typography variant="h6">{data.error}</Typography>
         ) : null}
 
         {status === "loading" || data?.error ? (
@@ -80,6 +104,15 @@ export const CharactersPage: React.FC = () => {
           </Button>
         ) : null}
       </>
+
+      {data?.error ? (
+        <ErrorPopup
+          handleClose={handleError}
+          isOpen={data?.error}
+          title={"Wubba Lubba Dub Dub"}
+          message={data?.error}
+        />
+      ) : null}
       {status === "success" && data.results ? (
         <>
           <FilterSection>
