@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import { Button, Grid, TextField } from "@mui/material";
 import { CharacterCard } from "../Presentation/CharacterCard";
 import styled from "@emotion/styled";
-import { DataGrid } from "@mui/x-data-grid";
 
 const CharactersPageContainer = styled.div`
   display: flex;

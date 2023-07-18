@@ -5,8 +5,8 @@ import {
     CardContent,
     CardMedia,
     Typography,
-  } from '@mui/material';
-  import React from 'react';
+} from '@mui/material';
+import React from 'react';
 import { Character } from '../data/interface';
   
   export const CharacterCard: React.FC<{ character: Character }> = (props) => {
