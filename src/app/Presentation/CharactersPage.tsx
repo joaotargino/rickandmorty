@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import React, { useEffect, useState } from "react";
 
@@ -24,10 +24,19 @@ const CharactersPageContainer = styled.div`
   padding: 20px;
 `;
 
+const FilterPaginationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+  max-width: 600px;
+  padding: 5px;
+`;
+
 const FilterSection = styled.div`
   display: flex;
   flex-direction: row;
-  align-self: center;
+  
   width: 50%;
 `;
 
@@ -35,7 +44,7 @@ const PaginationSection = styled.div`
   display: flex;
   flex-direction: row;
   align-self: center;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 50%;
 `;
 
@@ -115,39 +124,41 @@ export const CharactersPage: React.FC = () => {
       ) : null}
       {status === "success" && data.results ? (
         <>
-          <FilterSection>
-            <TextField
-              id="filled-basic"
-              label="Filter by name"
-              variant="filled"
-              type="text"
-              value={item}
-              onChange={onChange}
-              style={{ minWidth: "600px", marginRight: "10px" }}
-            />
+          <FilterPaginationContainer>
+            <FilterSection>
+              <TextField
+                id="filled-basic"
+                label="Filter by name"
+                variant="filled"
+                type="text"
+                value={item}
+                onChange={onChange}
+                style={{ minWidth: "600px", marginRight: "10px" }}
+              />
 
-            <Button variant="contained" onClick={handleFilter}>
-              Filter
-            </Button>
-          </FilterSection>
-          <SectionDivider />
-          <PaginationSection>
-            <Button
-              variant="contained"
-              onClick={() => setPage(page - 1)}
-              disabled={!data.info.prev}
-            >
-              Previous
-            </Button>
-            {page}
-            <Button
-              variant="contained"
-              onClick={() => setPage(page + 1)}
-              disabled={!data.info.next}
-            >
-              Next
-            </Button>
-          </PaginationSection>
+              <Button variant="contained" onClick={handleFilter}>
+                Filter
+              </Button>
+            </FilterSection>
+            <SectionDivider />
+            <PaginationSection>
+              <Button
+                variant="contained"
+                onClick={() => setPage(page - 1)}
+                disabled={!data.info.prev}
+              >
+                Previous
+              </Button>
+              {page}
+              <Button
+                variant="contained"
+                onClick={() => setPage(page + 1)}
+                disabled={!data.info.next}
+              >
+                Next
+              </Button>
+            </PaginationSection>
+          </FilterPaginationContainer>
           <SectionDivider />
           <Grid container spacing={1}>
             {data.results.map((c, index) => (
