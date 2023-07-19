@@ -152,9 +152,9 @@ export const CharactersPage: React.FC = () => {
             </PaginationSection>
           </FilterPaginationContainer>
           <SectionDivider />
-          <Grid container spacing={1}>
+          <Grid container spacing={1} sx={{width: 'auto', marginLeft: '128px' , alignSelf:'center'}}>
             {data.results.map((c, index) => (
-              <Grid item xs={4} sm={4} md={4} key={index}>
+              <Grid item xs={'auto'} sm={'auto'} md={'auto'} key={index}>
                 <CharacterCard character={c} />
               </Grid>
             ))}

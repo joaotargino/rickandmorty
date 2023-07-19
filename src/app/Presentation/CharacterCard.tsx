@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonBase,
   Card,
   CardActions,
   CardContent,
@@ -32,36 +33,44 @@ export const CharacterCard: React.FC<{ character: Character }> = (props) => {
           character={props.character}
         />
       ) : null}
-
-      <Card
-        raised
+      <ButtonBase
+        onClick={handleClickOpen}
         sx={{
-          maxWidth: 280,
-          margin: "0 auto",
-          padding: "0.1em",
+          display: "block",
+          textAlign: "initial",
         }}
       >
-        <CardMedia
-          component="img"
-          height="250"
-          sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
-          image={props.character.image}
-          title="image"
-        />
-        <CardContent>
-          <Typography noWrap gutterBottom variant="h4" component="div">
-            {props.character.name}
-          </Typography>
-          <Typography variant="body2" color={statusColor}>
-            {props.character.status}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" onClick={handleClickOpen}>
-            Open Card
-          </Button>
-        </CardActions>
-      </Card>
+        <Card
+          raised
+          sx={{
+            maxWidth: 280,
+            margin: "0 auto",
+            padding: "0.1em",
+          }}
+        >
+          <CardMedia
+            component="img"
+            height="250"
+            sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
+            image={props.character.image}
+            title="image"
+          />
+
+          <CardContent>
+            <Typography noWrap gutterBottom variant="h4" component="div">
+              {props.character.name}
+            </Typography>
+            <Typography variant="body2" color={statusColor}>
+              {props.character.status}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={handleClickOpen}>
+              Open Card
+            </Button>
+          </CardActions>
+        </Card>
+      </ButtonBase>
     </>
   );
 };
