@@ -6,15 +6,13 @@ import { fetchCharacters } from "../api/RickAndMortyAPIClient";
 import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
 import {
-  Backdrop,
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
+    Button, Grid,
+    TextField
 } from "@mui/material";
 import { CharacterCard } from "./CharacterCard";
 import styled from "@emotion/styled";
 import { ErrorPopup } from "./ErrorPopup";
+import { LoadingPopup } from "./LoadingPopup";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -43,7 +41,7 @@ const FilterSection = styled.div`
 const PaginationSection = styled.div`
   display: flex;
   flex-direction: row;
-  align-self: center;
+align-self: center;
   justify-content: space-around;
   width: 50%;
 `;
@@ -54,7 +52,7 @@ const SectionDivider = styled.div`
 export const CharactersPage: React.FC = () => {
   const [item, setItem] = useState("");
   const [page, setPage] = useState(1);
-  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { status, data, refetch } = useQuery(
     ["characters", page], //["characters", item] real time query
@@ -64,7 +62,7 @@ export const CharactersPage: React.FC = () => {
   console.log("data", data, data?.error);
 
   useEffect(() => {
-    setLoadingStatus(status === "loading");
+    setIsLoading(status === "loading");
   }, [status]);
 
   const handleFilter = () => {
@@ -87,21 +85,15 @@ export const CharactersPage: React.FC = () => {
   return (
     <CharactersPageContainer>
       <>
-        {status === "loading" ? (
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={loadingStatus}
-            onClick={() => setLoadingStatus(false)}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+        {isLoading || (page === 1 && data === undefined) ? (
+          <LoadingPopup isOpen={isLoading}/>
         ) : null}
 
         {data?.error ? (
           <Typography variant="h6">{data.error}</Typography>
         ) : null}
 
-        {status === "loading" || data?.error ? (
+        {data?.error ? (
           <Button
             variant="contained"
             onClick={() => {
