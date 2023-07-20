@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 // import { render } from './test-utils';
 import { Character } from "../app/data/model/interface";
-import { CharacterCard } from "../app/presentation/components/CharacterCard";
+import { CharacterCard } from "../app/ui/components/CharacterCard";
 
 const character: Character = {
   id: 361,
