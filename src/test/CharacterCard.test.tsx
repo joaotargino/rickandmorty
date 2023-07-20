@@ -31,22 +31,17 @@ describe("<CharacterCard character={character} />", () => {
     expect(screen.getByText(/Open card/)).toBeInTheDocument();
   });
 
-  it("should render OPEN when clicked", () => {
-    const setStateMock = jest.fn();
-    const useStateMock: any = (useState: any) => [useState, setStateMock];
-
+  it("should change the button's text to CLOSE", () => {
     render(<CharacterCard character={character} />); // render Character card
 
     expect(screen.getByText(/Open card/)).toBeInTheDocument(); // check if the Open string to be rendered
     fireEvent.click(screen.getByText(/Open card/)); // trigger click event on the element
 
     // When the Open card button is clicked, a Modal Popup is rendered
-    // and the state isOpen === true
+    // and the state button text changes to Close
     // check for state change
 
-    
     // Mock useState before rendering your component
-    jest.spyOn(React, "useState").mockImplementationOnce(useStateMock);
-    expect(setStateMock).toHaveBeenCalledWith("Currently open");
+    expect(screen.getByText(/Close/)).toBeInTheDocument();
   });
 });
