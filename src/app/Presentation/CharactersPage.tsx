@@ -5,14 +5,13 @@ import React, { useEffect, useState } from "react";
 import { fetchCharacters } from "../api/RickAndMortyAPIClient";
 import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
-import {
-    Button, Grid,
-    TextField
-} from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { CharacterCard } from "./CharacterCard";
 import styled from "@emotion/styled";
 import { ErrorPopup } from "./ErrorPopup";
 import { LoadingPopup } from "./LoadingPopup";
+import { PageSizeSelector } from "./PageSizeSelector";
+import { PaginationSection } from "./PaginationSection";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -34,15 +33,7 @@ const FilterPaginationContainer = styled.div`
 const FilterSection = styled.div`
   display: flex;
   flex-direction: row;
-  
-  width: 50%;
-`;
 
-const PaginationSection = styled.div`
-  display: flex;
-  flex-direction: row;
-align-self: center;
-  justify-content: space-around;
   width: 50%;
 `;
 
@@ -52,6 +43,7 @@ const SectionDivider = styled.div`
 export const CharactersPage: React.FC = () => {
   const [item, setItem] = useState("");
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState("20");
   const [isLoading, setIsLoading] = useState(true);
 
   const { status, data, refetch } = useQuery(
@@ -86,7 +78,7 @@ export const CharactersPage: React.FC = () => {
     <CharactersPageContainer>
       <>
         {isLoading || (page === 1 && data === undefined) ? (
-          <LoadingPopup isOpen={isLoading}/>
+          <LoadingPopup isOpen={isLoading} />
         ) : null}
 
         {data?.error ? (
@@ -133,28 +125,21 @@ export const CharactersPage: React.FC = () => {
               </Button>
             </FilterSection>
             <SectionDivider />
-            <PaginationSection>
-              <Button
-                variant="contained"
-                onClick={() => setPage(page - 1)}
-                disabled={!data.info.prev}
-              >
-                Previous
-              </Button>
-              {page}
-              <Button
-                variant="contained"
-                onClick={() => setPage(page + 1)}
-                disabled={!data.info.next}
-              >
-                Next
-              </Button>
-            </PaginationSection>
+            <PageSizeSelector
+              pageSize={pageSize}
+              handleChange={setPageSize}
+            ></PageSizeSelector>
+            <SectionDivider />
+            <PaginationSection data={data} page={page} setPage={setPage} />
           </FilterPaginationContainer>
           <SectionDivider />
-          <Grid container spacing={1} sx={{width: 'auto', marginLeft: '128px' , alignSelf:'center'}}>
+          <Grid
+            container
+            spacing={1}
+            sx={{ width: "auto", marginLeft: "128px", alignSelf: "center" }}
+          >
             {data.results.map((c, index) => (
-              <Grid item xs={'auto'} sm={'auto'} md={'auto'} key={index}>
+              <Grid item xs={"auto"} sm={"auto"} md={"auto"} key={index}>
                 <CharacterCard character={c} />
               </Grid>
             ))}
