@@ -10,8 +10,9 @@ export const fetchCharacters = async (name: string, page: number) => {
   return response.json();
 };
 
-export const fetchCharacterByID = async (id: string) => {
-  const url = `${BASE_URL}/${id}`;
+export const fetchCharactersByListOfIDs = async (ids: string) => {
+  const url = `${BASE_URL}/${ids}`;
   const response = await fetch(url);
+  console.log(ids, response);
   return response.json();
 };

@@ -26,7 +26,7 @@ export const PageSizeSelector: React.FC<{
         onChange={handleChange}
       >
         <MenuItem value={"20"}>20</MenuItem>
-        <MenuItem value={"40"}>40</MenuItem>
+        <MenuItem value={"50"}>50</MenuItem>
       </Select>
     </FormControl>
   );

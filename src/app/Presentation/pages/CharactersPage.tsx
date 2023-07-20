@@ -2,7 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 
-import { fetchCharacters } from "../../api/RickAndMortyAPIClient";
+import {
+  fetchCharacters,
+  fetchCharactersByListOfIDs,
+} from "../../api/RickAndMortyAPIClient";
 import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
 import { Button, TextField } from "@mui/material";
@@ -12,6 +15,7 @@ import { LoadingPopup } from "../components/modal/LoadingPopup";
 import { PageSizeSelector } from "../components/PageSizeSelector";
 import { PaginationSection } from "../components/PaginationSection";
 import { CharacterGridComponent } from "../components/CharacterGridComponent";
+import { Character } from "@/app/data/model/interface";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -43,17 +47,45 @@ const FilterSection = styled.div`
 const SectionDivider = styled.div`
   height: 10px;
 `;
+
+const RESULTS_PER_PAGE_SMALL = "20";
+const RESULTS_PER_PAGE_BIG = "50";
 export const CharactersPage: React.FC = () => {
+  const [pageSize, setPageSize] = useState(RESULTS_PER_PAGE_SMALL);
+  const [listOfIDs, setListOfIDs] = useState("");
   const [item, setItem] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState("20");
+  const [pageStep, setPageStep] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+
+  let tempList: Character[] = [];
+  const [charactersList, setCharactersList] = useState(tempList);
 
   const { status, data, refetch } = useQuery(
     //observes when there is a change in the page and fetch for the next page
-    ["characters", page], //["characters", item] real time query
-    () => fetchCharacters(item, page)
+    ["characters", page, pageSize, listOfIDs], //["characters", item] real time query
+    () =>
+      pageSize === RESULTS_PER_PAGE_SMALL
+        ? fetchCharacters(item, page)
+        : fetchCharactersByListOfIDs(listOfIDs)
   );
+
+  useEffect(() => {
+    if (data?.results && pageSize === RESULTS_PER_PAGE_SMALL) {
+      setCharactersList(data.results);
+    } else if (pageSize === RESULTS_PER_PAGE_BIG) {
+      let ids = "";
+      for (let i = pageStep; i <= page * 50; i++) {
+        ids += i + ",";
+      }
+      setPageStep(page * 50 - 50 + 1);
+      setListOfIDs(ids.slice(0, -1));
+
+      if (data) {
+        setCharactersList(data);
+      }
+    }
+  }, [data, page, pageSize]);
 
   useEffect(() => {
     setIsLoading(status === "loading");
@@ -81,20 +113,24 @@ export const CharactersPage: React.FC = () => {
   return (
     <CharactersPageContainer>
       <FilterPaginationContainer>
-        <FilterSection>
-          <TextField
-            id="filled-basic"
-            label="Filter by name"
-            variant="filled"
-            type="text"
-            value={item}
-            onChange={onChange}
-            style={{ minWidth: "600px", marginRight: "10px" }}
-          />
+        <FilterSection style={{ minWidth: "600px", marginRight: "10px" }}>
+          {pageSize === RESULTS_PER_PAGE_SMALL ? (
+            <>
+              <TextField
+                id="filled-basic"
+                label="Filter by name"
+                variant="filled"
+                type="text"
+                value={item}
+                onChange={onChange}
+                style={{ minWidth: "600px", marginRight: "10px" }}
+              />
 
-          <Button variant="contained" onClick={handleFilter}>
-            Filter
-          </Button>
+              <Button variant="contained" onClick={handleFilter}>
+                Filter
+              </Button>
+            </>
+          ) : null}
         </FilterSection>
         <SectionDivider />
         <PageSizeSelector
@@ -102,8 +138,20 @@ export const CharactersPage: React.FC = () => {
           handleChange={setPageSize}
         ></PageSizeSelector>
         <SectionDivider />
-        {data?.results ? (
-          <PaginationSection data={data} page={page} setPage={setPage} />
+        {data?.results ||
+        (pageSize === RESULTS_PER_PAGE_BIG && charactersList.length > 0) ? (
+          <PaginationSection
+            page={page}
+            setPage={setPage}
+            hasPrevious={
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.previous) ||
+              (pageSize === RESULTS_PER_PAGE_BIG && page > 1)
+            }
+            hasNext={
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.next) ||
+              pageSize === RESULTS_PER_PAGE_BIG
+            }
+          />
         ) : null}
 
         <>
@@ -138,13 +186,25 @@ export const CharactersPage: React.FC = () => {
         />
       ) : null}
 
-      {status === "success" && data.results ? (
+      {(status === "success" && data.results) ||
+      (pageSize === RESULTS_PER_PAGE_BIG && charactersList.length > 0) ? (
         <>
           <SectionDivider />
-          <CharacterGridComponent data={data} />
+          <CharacterGridComponent data={charactersList} />
 
           <SectionDivider style={{ marginTop: "48px" }} />
-          <PaginationSection data={data} page={page} setPage={setPage} />
+          <PaginationSection
+            page={page}
+            setPage={setPage}
+            hasPrevious={
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.previous) ||
+              (pageSize === RESULTS_PER_PAGE_BIG && page > 1)
+            }
+            hasNext={
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.next) ||
+              pageSize === RESULTS_PER_PAGE_BIG
+            }
+          />
         </>
       ) : null}
     </CharactersPageContainer>

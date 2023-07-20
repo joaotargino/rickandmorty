@@ -11,8 +11,9 @@ const PaginationSectionContainer = styled.div`
 `;
 
 export const PaginationSection: React.FC<{
-  data: any;
   page: number;
+  hasPrevious: boolean;
+  hasNext: boolean;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }> = (props) => {
   return (
@@ -20,7 +21,7 @@ export const PaginationSection: React.FC<{
       <Button
         variant="contained"
         onClick={() => props.setPage(props.page - 1)}
-        disabled={!props.data.info.prev}
+        disabled={!props.hasPrevious}
       >
         Previous
       </Button>
@@ -28,7 +29,7 @@ export const PaginationSection: React.FC<{
       <Button
         variant="contained"
         onClick={() => props.setPage(props.page + 1)}
-        disabled={!props.data.info.next}
+        disabled={!props.hasNext}
       >
         Next
       </Button>
