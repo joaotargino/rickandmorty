@@ -6,7 +6,6 @@ import { Character } from "@/app/data/model/interface";
 export const CharacterGridComponent: React.FC<{ data: Character[] }> = (
   props
 ) => {
-  console.log(props.data, "GRID");
   return (
     <Grid
       container
