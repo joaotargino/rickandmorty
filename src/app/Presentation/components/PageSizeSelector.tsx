@@ -5,6 +5,7 @@ import {
     MenuItem,
     SelectChangeEvent,
 } from "@mui/material";
+import React from "react";
 
 export const PageSizeSelector: React.FC<{
   pageSize: string;

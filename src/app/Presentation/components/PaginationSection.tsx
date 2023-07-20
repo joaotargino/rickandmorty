@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
+import React from "react";
 
 const PaginationSectionContainer = styled.div`
   display: flex;
