@@ -22,6 +22,7 @@ const CharactersPageContainer = styled.div`
   padding: 20px;
   min-height: 100vh;
   width: 100%;
+  padding-bottom: 128px;
 `;
 
 const FilterPaginationContainer = styled.div`
@@ -145,8 +146,11 @@ export const CharactersPage: React.FC = () => {
       {status === "success" && data.results ? (
         <>
           <SectionDivider />
-
           <CharacterGridComponent data={data} />
+          
+          <SectionDivider style={{marginTop: '48px'}} />
+          <PaginationSection data={data} page={page} setPage={setPage} />
+        
         </>
       ) : null}
     </CharactersPageContainer>
