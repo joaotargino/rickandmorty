@@ -3,7 +3,10 @@ import { CharacterCard } from "./CharacterCard";
 import React from "react";
 import { Character } from "@/app/data/model/interface";
 
-export const CharacterGridComponent: React.FC<{ data: any }> = (props) => {
+export const CharacterGridComponent: React.FC<{ data: Character[] }> = (
+  props
+) => {
+  console.log(props.data, "GRID");
   return (
     <Grid
       container
@@ -15,7 +18,7 @@ export const CharacterGridComponent: React.FC<{ data: any }> = (props) => {
         alignSelf: "center",
       }}
     >
-      {props.data.results.map((c: Character, index: number) => (
+      {props.data.map((c: Character, index: number) => (
         <Grid item xs={"auto"} sm={"auto"} md={"auto"} key={index}>
           <CharacterCard character={c} />
         </Grid>
