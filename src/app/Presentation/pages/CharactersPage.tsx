@@ -5,8 +5,7 @@ import React, { useEffect, useState } from "react";
 import { fetchCharacters } from "../../api/RickAndMortyAPIClient";
 import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
-import { Button, Grid, TextField } from "@mui/material";
-import { CharacterCard } from "../components/CharacterCard";
+import { Button, TextField } from "@mui/material";
 import styled from "@emotion/styled";
 import { ErrorPopup } from "../components/modal/ErrorPopup";
 import { LoadingPopup } from "../components/modal/LoadingPopup";
@@ -56,8 +55,6 @@ export const CharactersPage: React.FC = () => {
     () => fetchCharacters(item, page)
   );
 
-  console.log("data", data, data?.error);
-
   useEffect(() => {
     setIsLoading(status === "loading");
   }, [status]);
@@ -65,8 +62,6 @@ export const CharactersPage: React.FC = () => {
   const handleFilter = () => {
     refetch();
     setPage(1);
-
-    console.log(item);
   };
 
   const handleError = () => {
@@ -147,10 +142,9 @@ export const CharactersPage: React.FC = () => {
         <>
           <SectionDivider />
           <CharacterGridComponent data={data} />
-          
-          <SectionDivider style={{marginTop: '48px'}} />
+
+          <SectionDivider style={{ marginTop: "48px" }} />
           <PaginationSection data={data} page={page} setPage={setPage} />
-        
         </>
       ) : null}
     </CharactersPageContainer>
