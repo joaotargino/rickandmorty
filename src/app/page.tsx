@@ -1,6 +1,6 @@
 "use client";
 
-import { CharactersPage } from "./presentation/CharactersPage";
+import { CharactersPage } from "./presentation/pages/CharactersPage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";
@@ -11,12 +11,10 @@ const queryClient = new QueryClient();
 export default function Home() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Router> */}
       <ThemeProvider theme={theme}>
         <CharactersPage />
         <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
-      {/* </Router> */}
     </QueryClientProvider>
   );
 }

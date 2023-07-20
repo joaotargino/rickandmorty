@@ -9,8 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Character } from "../data/model/interface";
-import { useCharacterStatusColor } from "./CharacterStyleHelper";
+import { Character } from "../../../data/model/interface";
+import { useCharacterStatusColor } from "../../CharacterStyleHelper";
 
 const style = {
   position: "absolute" as "absolute",

@@ -17,7 +17,7 @@ const style = {
 
 
 interface Props {
-//   handleClose: () => void;
+  handleClose: () => void;
   isOpen: boolean;
 }
 
@@ -26,7 +26,7 @@ export const LoadingPopup: React.FC<Props> = (props) => {
 
   const handleClose = () => {
     setIsOpen(false);
-    // props.handleClose();
+    props.handleClose();
   };
   return (
     <React.Fragment>
@@ -40,7 +40,6 @@ export const LoadingPopup: React.FC<Props> = (props) => {
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={props.isOpen}
-            // onClick={() => setLoadingStatus(false)}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

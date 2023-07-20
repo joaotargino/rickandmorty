@@ -8,9 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Character } from "../data/model/interface";
-import { CharacterPopup } from "./CharacterPopup";
-import { useCharacterStatusColor } from "./CharacterStyleHelper";
+import { Character } from "../../data/model/interface";
+import { CharacterPopup } from "./modal/CharacterPopup";
+import { useCharacterStatusColor } from "../CharacterStyleHelper";
 
 export const CharacterCard: React.FC<{ character: Character }> = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);

@@ -2,16 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 
-import { fetchCharacters } from "../api/RickAndMortyAPIClient";
+import { fetchCharacters } from "../../api/RickAndMortyAPIClient";
 import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
 import { Button, Grid, TextField } from "@mui/material";
-import { CharacterCard } from "./CharacterCard";
+import { CharacterCard } from "../components/CharacterCard";
 import styled from "@emotion/styled";
-import { ErrorPopup } from "./ErrorPopup";
-import { LoadingPopup } from "./LoadingPopup";
-import { PageSizeSelector } from "./PageSizeSelector";
-import { PaginationSection } from "./PaginationSection";
+import { ErrorPopup } from "../components/modal/ErrorPopup";
+import { LoadingPopup } from "../components/modal/LoadingPopup";
+import { PageSizeSelector } from "../components/PageSizeSelector";
+import { PaginationSection } from "../components/PaginationSection";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -19,6 +19,8 @@ const CharactersPageContainer = styled.div`
   justify-content: space-between;
   background-color: #91b0ba;
   padding: 20px;
+  min-height: 100vh;
+  width: 100%;
 `;
 
 const FilterPaginationContainer = styled.div`
@@ -47,6 +49,7 @@ export const CharactersPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const { status, data, refetch } = useQuery(
+    //observes when there is a change in the page and fetch for the next page
     ["characters", page], //["characters", item] real time query
     () => fetchCharacters(item, page)
   );
@@ -70,6 +73,10 @@ export const CharactersPage: React.FC = () => {
     refetch();
   };
 
+  const handleReload = () => {    
+    refetch();
+  };
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setItem(e.currentTarget.value);
   };
@@ -78,7 +85,7 @@ export const CharactersPage: React.FC = () => {
     <CharactersPageContainer>
       <>
         {isLoading || (page === 1 && data === undefined) ? (
-          <LoadingPopup isOpen={isLoading} />
+          <LoadingPopup isOpen={isLoading} handleClose={handleReload}/>
         ) : null}
 
         {data?.error ? (
@@ -136,7 +143,7 @@ export const CharactersPage: React.FC = () => {
           <Grid
             container
             spacing={1}
-            sx={{ width: "auto", marginLeft: "128px", alignSelf: "center" }}
+            sx={{ width: "auto", maxWidth: '1500px',marginLeft: "128px", alignSelf: "center" }}
           >
             {data.results.map((c, index) => (
               <Grid item xs={"auto"} sm={"auto"} md={"auto"} key={index}>
