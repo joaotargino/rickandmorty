@@ -85,7 +85,7 @@ export const CharactersPage: React.FC = () => {
         setCharactersList(data);
       }
     }
-  }, [data, page, pageSize]);
+  }, [data, page, pageSize, pageStep]);
 
   useEffect(() => {
     setIsLoading(status === "loading");
