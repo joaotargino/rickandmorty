@@ -12,6 +12,7 @@ import { ErrorPopup } from "../components/modal/ErrorPopup";
 import { LoadingPopup } from "../components/modal/LoadingPopup";
 import { PageSizeSelector } from "../components/PageSizeSelector";
 import { PaginationSection } from "../components/PaginationSection";
+import { CharacterGridComponent } from "../components/CharacterGridComponent";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -73,7 +74,7 @@ export const CharactersPage: React.FC = () => {
     refetch();
   };
 
-  const handleReload = () => {    
+  const handleReload = () => {
     refetch();
   };
 
@@ -83,27 +84,54 @@ export const CharactersPage: React.FC = () => {
 
   return (
     <CharactersPageContainer>
-      <>
-        {isLoading || (page === 1 && data === undefined) ? (
-          <LoadingPopup isOpen={isLoading} handleClose={handleReload}/>
-        ) : null}
+      <FilterPaginationContainer>
+        <FilterSection>
+          <TextField
+            id="filled-basic"
+            label="Filter by name"
+            variant="filled"
+            type="text"
+            value={item}
+            onChange={onChange}
+            style={{ minWidth: "600px", marginRight: "10px" }}
+          />
 
-        {data?.error ? (
-          <Typography variant="h6">{data.error}</Typography>
-        ) : null}
-
-        {data?.error ? (
-          <Button
-            variant="contained"
-            onClick={() => {
-              setItem("");
-              refetch();
-            }}
-          >
-            Try again
+          <Button variant="contained" onClick={handleFilter}>
+            Filter
           </Button>
+        </FilterSection>
+        <SectionDivider />
+        <PageSizeSelector
+          pageSize={pageSize}
+          handleChange={setPageSize}
+        ></PageSizeSelector>
+        <SectionDivider />
+        {data?.results ? (
+          <PaginationSection data={data} page={page} setPage={setPage} />
         ) : null}
-      </>
+
+        <>
+          {isLoading || (page === 1 && data === undefined) ? (
+            <LoadingPopup isOpen={isLoading} handleClose={handleReload} />
+          ) : null}
+
+          {data?.error ? (
+            <Typography variant="h6">{data.error}</Typography>
+          ) : null}
+
+          {data?.error ? (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setItem("");
+                refetch();
+              }}
+            >
+              Try again
+            </Button>
+          ) : null}
+        </>
+      </FilterPaginationContainer>
 
       {data?.error ? (
         <ErrorPopup
@@ -113,44 +141,12 @@ export const CharactersPage: React.FC = () => {
           message={data?.error}
         />
       ) : null}
+
       {status === "success" && data.results ? (
         <>
-          <FilterPaginationContainer>
-            <FilterSection>
-              <TextField
-                id="filled-basic"
-                label="Filter by name"
-                variant="filled"
-                type="text"
-                value={item}
-                onChange={onChange}
-                style={{ minWidth: "600px", marginRight: "10px" }}
-              />
-
-              <Button variant="contained" onClick={handleFilter}>
-                Filter
-              </Button>
-            </FilterSection>
-            <SectionDivider />
-            <PageSizeSelector
-              pageSize={pageSize}
-              handleChange={setPageSize}
-            ></PageSizeSelector>
-            <SectionDivider />
-            <PaginationSection data={data} page={page} setPage={setPage} />
-          </FilterPaginationContainer>
           <SectionDivider />
-          <Grid
-            container
-            spacing={1}
-            sx={{ width: "auto", maxWidth: '1500px',marginLeft: "128px", alignSelf: "center" }}
-          >
-            {data.results.map((c, index) => (
-              <Grid item xs={"auto"} sm={"auto"} md={"auto"} key={index}>
-                <CharacterCard character={c} />
-              </Grid>
-            ))}
-          </Grid>
+
+          <CharacterGridComponent data={data} />
         </>
       ) : null}
     </CharactersPageContainer>
