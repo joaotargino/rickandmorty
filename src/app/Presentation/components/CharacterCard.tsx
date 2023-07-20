@@ -14,15 +14,18 @@ import { useCharacterStatusColor } from "../CharacterStyleHelper";
 
 export const CharacterCard: React.FC<{ character: Character }> = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [cardButtonText, setCardButtonText] = React.useState("Open card");
 
   const statusColor = useCharacterStatusColor(props.character.status);
 
   const handleClickClose = () => {
     setIsOpen(false);
+    setCardButtonText("Open again");
   };
 
   const handleClickOpen = () => {
     setIsOpen(true);
+    setCardButtonText("Currently open");
   };
   return (
     <>
@@ -66,7 +69,7 @@ export const CharacterCard: React.FC<{ character: Character }> = (props) => {
           </CardContent>
           <CardActions>
             <Button size="small" onClick={handleClickOpen}>
-              Open Card
+              {cardButtonText}
             </Button>
           </CardActions>
         </Card>
