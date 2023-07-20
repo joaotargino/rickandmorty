@@ -63,7 +63,7 @@ export const CharactersPage: React.FC = () => {
 
   const { status, data, refetch } = useQuery(
     //observes when there is a change in the page and fetch for the next page
-    ["characters", page, listOfIDs], //["characters", item] real time query
+    ["characters", page, pageSize, listOfIDs], //["characters", item] real time query
     () =>
       pageSize === RESULTS_PER_PAGE_SMALL
         ? fetchCharacters(item, page)
@@ -78,7 +78,7 @@ export const CharactersPage: React.FC = () => {
       for (let i = pageStep; i <= page * 50; i++) {
         ids += i + ",";
       }
-      setPageStep((page * 50 - 50) + 1);
+      setPageStep(page * 50 - 50 + 1);
       setListOfIDs(ids.slice(0, -1));
 
       if (data) {
@@ -138,7 +138,8 @@ export const CharactersPage: React.FC = () => {
           handleChange={setPageSize}
         ></PageSizeSelector>
         <SectionDivider />
-        {data?.results || (pageSize === RESULTS_PER_PAGE_BIG && charactersList.length > 0) ? (
+        {data?.results ||
+        (pageSize === RESULTS_PER_PAGE_BIG && charactersList.length > 0) ? (
           <PaginationSection
             page={page}
             setPage={setPage}
@@ -147,7 +148,8 @@ export const CharactersPage: React.FC = () => {
               (pageSize === RESULTS_PER_PAGE_BIG && page > 1)
             }
             hasNext={
-              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.next) || pageSize === RESULTS_PER_PAGE_BIG
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.next) ||
+              pageSize === RESULTS_PER_PAGE_BIG
             }
           />
         ) : null}
@@ -199,7 +201,8 @@ export const CharactersPage: React.FC = () => {
               (pageSize === RESULTS_PER_PAGE_BIG && page > 1)
             }
             hasNext={
-              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.next) || pageSize === RESULTS_PER_PAGE_BIG
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.next) ||
+              pageSize === RESULTS_PER_PAGE_BIG
             }
           />
         </>
