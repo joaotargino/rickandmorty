@@ -147,6 +147,7 @@ export const CharactersPage: React.FC = () => {
         <PageSizeSelector
           pageSize={pageSize}
           handleChange={setPageSize}
+          resetPage={() => setPage(1)}
         ></PageSizeSelector>
         <SectionDivider />
         {data?.results ||

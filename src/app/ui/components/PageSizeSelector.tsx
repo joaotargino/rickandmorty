@@ -1,17 +1,19 @@
 import {
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    SelectChangeEvent,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import React from "react";
 
 export const PageSizeSelector: React.FC<{
   pageSize: string;
   handleChange: React.Dispatch<React.SetStateAction<string>>;
+  resetPage: () => void;
 }> = (props) => {
   const handleChange = (event: SelectChangeEvent<string>): void => {
+    props.resetPage();
     props.handleChange(event.target.value);
   };
 
