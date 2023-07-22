@@ -155,7 +155,7 @@ export const CharactersPage: React.FC = () => {
             page={page}
             setPage={setPage}
             hasPrevious={
-              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.previous) ||
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.prev) ||
               (pageSize === RESULTS_PER_PAGE_BIG && page > 1)
             }
             hasNext={
@@ -208,7 +208,7 @@ export const CharactersPage: React.FC = () => {
             page={page}
             setPage={setPage}
             hasPrevious={
-              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.previous) ||
+              (pageSize === RESULTS_PER_PAGE_SMALL && data.info?.prev) ||
               (pageSize === RESULTS_PER_PAGE_BIG && page > 1)
             }
             hasNext={
