@@ -16,6 +16,7 @@ import { PageSizeSelector } from "../components/PageSizeSelector";
 import { PaginationSection } from "../components/PaginationSection";
 import { CharacterGridComponent } from "../components/CharacterGridComponent";
 import { Character } from "@/app/data/model/interface";
+import useIsMobile from "@/app/util/Hooks";
 
 const CharactersPageContainer = styled.div`
   display: flex;
@@ -51,6 +52,8 @@ const SectionDivider = styled.div`
 const RESULTS_PER_PAGE_SMALL = "20";
 const RESULTS_PER_PAGE_BIG = "50";
 export const CharactersPage: React.FC = () => {
+  const isMobile = useIsMobile();
+
   const [pageSize, setPageSize] = useState(RESULTS_PER_PAGE_SMALL);
   const [listOfIDs, setListOfIDs] = useState("");
   const [item, setItem] = useState("");
@@ -113,7 +116,12 @@ export const CharactersPage: React.FC = () => {
   return (
     <CharactersPageContainer>
       <FilterPaginationContainer>
-        <FilterSection style={{ minWidth: "600px", marginRight: "10px" }}>
+        <FilterSection
+          style={{
+            minWidth: isMobile ? "300px" : "600px",
+            marginRight: "10px",
+          }}
+        >
           {pageSize === RESULTS_PER_PAGE_SMALL ? (
             <>
               <TextField
@@ -123,7 +131,10 @@ export const CharactersPage: React.FC = () => {
                 type="text"
                 value={item}
                 onChange={onChange}
-                style={{ minWidth: "600px", marginRight: "10px" }}
+                style={{
+                  minWidth: isMobile ? "300px" : "600px",
+                  marginRight: "10px",
+                }}
               />
 
               <Button variant="contained" onClick={handleFilter}>
