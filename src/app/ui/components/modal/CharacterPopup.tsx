@@ -1,4 +1,5 @@
 import {
+  Backdrop,
   Box,
   Button,
   Card,
@@ -7,12 +8,14 @@ import {
   CardMedia,
   Modal,
   Typography,
+  Zoom,
 } from "@mui/material";
 import React from "react";
 import { Character } from "../../../data/model/interface";
 import { useCharacterStatusColor } from "../../CharacterStyleHelper";
 
 const style = {
+  display: "flex",
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
@@ -47,51 +50,60 @@ export const CharacterPopup: React.FC<Props> = (props) => {
       onClose={handleClose}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
+      // closeAfterTransition
+      // slots={{ backdrop: Backdrop }}
+      // slotProps={{
+      //   backdrop: {
+      //     timeout: 500,
+      //   },
+      // }}
     >
       <Box sx={style}>
-        <Card
-          raised
-          sx={{
-            maxWidth: 640,
-            margin: "0 auto",
-            padding: "0.1em",
-          }}
-        >
-          <CardMedia
-            component="img"
-            height="800"
-            sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
-            image={props.character.image}
-            title="image"
-          />
-          <CardContent>
-            <Typography id="name" gutterBottom variant="h3" component="div">
-              {props.character.name}
-            </Typography>
-            <Typography
-              id="status"
-              variant="h5"
-              color={statusColor}
-              style={{ fontWeight: "bold" }}
-            >
-              {props.character.status}
-            </Typography>
-            <Typography id="species" variant="body2" color="text.secondary">
-              Species: {props.character.species}
-            </Typography>
-            <Typography id="origin" variant="body2" color="text.secondary">
-              Origin: {props.character.origin?.name}
-            </Typography>
-            <Typography id="location" variant="body2" color="text.secondary">
-              Location: {props.character.location?.name}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" onClick={handleClose}>
-              Close
-            </Button>
-          </CardActions>
-        </Card>
+        <Zoom in={isOpen} style={{ transitionDelay: isOpen ? "10ms" : "0ms" }}>
+          <Card
+            raised
+            sx={{
+              maxWidth: 640,
+              margin: "0 auto",
+              padding: "0.1em",
+            }}
+          >
+            <CardMedia
+              component="img"
+              height="800"
+              sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
+              image={props.character.image}
+              title="image"
+            />
+            <CardContent>
+              <Typography id="name" gutterBottom variant="h3" component="div">
+                {props.character.name}
+              </Typography>
+              <Typography
+                id="status"
+                variant="h5"
+                color={statusColor}
+                style={{ fontWeight: "bold" }}
+              >
+                {props.character.status}
+              </Typography>
+              <Typography id="species" variant="body2" color="text.secondary">
+                Species: {props.character.species}
+              </Typography>
+              <Typography id="origin" variant="body2" color="text.secondary">
+                Origin: {props.character.origin?.name}
+              </Typography>
+              <Typography id="location" variant="body2" color="text.secondary">
+                Location: {props.character.location?.name}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" onClick={handleClose}>
+                Close
+              </Button>
+            </CardActions>
+          </Card>
+        </Zoom>
       </Box>
     </Modal>
   );

@@ -9,18 +9,6 @@ import { CharactersPage } from "./ui/pages/CharactersPage";
 
 const queryClient = new QueryClient();
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between" style={{backgroundColor: "#91b0ba", minWidth: '100vh'}}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <CharactersPage />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </main>
-  );
-}
 const theme = createTheme({
   typography: {
     h1: {
@@ -43,3 +31,19 @@ const theme = createTheme({
     },
   },
 });
+
+export default function Home() {
+  return (
+    <main
+      className="flex min-h-screen flex-col items-center justify-between"
+      style={{ backgroundColor: "#91b0ba", minWidth: "100vh" }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CharactersPage />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </main>
+  );
+}

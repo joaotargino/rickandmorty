@@ -22,13 +22,18 @@ export const PageSizeSelector: React.FC<{
       <InputLabel id="select-label">Results per page</InputLabel>
       <Select
         labelId="select-label"
-        id="select"
+        data-testid="select"
+        id="page-size-selector"
         value={props.pageSize}
         label="Characters"
         onChange={handleChange}
       >
-        <MenuItem value={"20"}>20</MenuItem>
-        <MenuItem value={"50"}>50</MenuItem>
+        <MenuItem data-testid="select-option-20" value={"20"}>
+          20
+        </MenuItem>
+        <MenuItem data-testid="select-option-50" value={"50"}>
+          50
+        </MenuItem>
       </Select>
     </FormControl>
   );
