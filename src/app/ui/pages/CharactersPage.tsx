@@ -17,6 +17,7 @@ import { PaginationSection } from "../components/PaginationSection";
 import { CharacterGridComponent } from "../components/CharacterGridComponent";
 import { ApiResponse, Character, Info } from "@/app/data/model/interface";
 import { AxiosError } from "axios";
+import useIsMobile from "@/app/util/Hooks";
 // import useIsMobile from "@/app/util/Hooks";
 
 const CharactersPageContainer = styled.div`
@@ -53,7 +54,7 @@ const SectionDivider = styled.div`
 const RESULTS_PER_PAGE_SMALL = "20";
 const RESULTS_PER_PAGE_BIG = "50";
 export const CharactersPage: React.FC = () => {
-  const isMobile = false; // useIsMobile();
+  const isMobile = useIsMobile();
 
   const [pageSize, setPageSize] = useState(RESULTS_PER_PAGE_SMALL);
   const [listOfIDs, setListOfIDs] = useState("");
