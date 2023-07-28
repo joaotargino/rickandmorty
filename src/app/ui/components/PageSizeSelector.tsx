@@ -6,6 +6,13 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import React from "react";
+import useTranslation from "next-translate/useTranslation";
+
+const pageSizes = [
+  { id: 1, name: "20" },
+  { id: 2, name: "50" },
+  // { id: 3, name: "100" },
+];
 
 export const PageSizeSelector: React.FC<{
   pageSize: string;
@@ -17,9 +24,11 @@ export const PageSizeSelector: React.FC<{
     props.handleChange(event.target.value);
   };
 
+  const { t, lang } = useTranslation("common");
+
   return (
     <FormControl fullWidth>
-      <InputLabel id="select-label">Results per page</InputLabel>
+      <InputLabel id="select-label-input">{t("results-pp")}</InputLabel>
       <Select
         labelId="select-label"
         data-testid="select"
@@ -28,12 +37,15 @@ export const PageSizeSelector: React.FC<{
         label="Characters"
         onChange={handleChange}
       >
-        <MenuItem data-testid="select-option-20" value={"20"}>
-          20
-        </MenuItem>
-        <MenuItem data-testid="select-option-50" value={"50"}>
-          50
-        </MenuItem>
+        {pageSizes.map((item) => (
+          <MenuItem
+            data-testid={`select-option-${item.name}`}
+            value={item.name}
+            key={item.id}
+          >
+            {item.name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

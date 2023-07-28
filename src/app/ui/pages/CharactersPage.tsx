@@ -181,6 +181,7 @@ export const CharactersPage: React.FC = () => {
             <LoadingPopup
               isOpen={isLoading || isFetching || isRefetching}
               handleClose={handleReload}
+              data-testid="loading-popup"
             />
           ) : null}
 
@@ -213,10 +214,14 @@ export const CharactersPage: React.FC = () => {
       (pageSize === RESULTS_PER_PAGE_BIG && charactersList.length > 0) ? (
         <>
           <SectionDivider />
-          <CharacterGridComponent data={charactersList} />
+          <CharacterGridComponent
+            data={charactersList}
+            data-testid="characters"
+          />
 
           <SectionDivider style={{ marginTop: "48px" }} />
           <PaginationSection
+            data-testid="pagination-section"
             page={page}
             setPage={setPage}
             hasPrevious={

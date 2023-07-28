@@ -18,8 +18,15 @@ export const CharacterGridComponent: React.FC<{ data: Character[] }> = (
       }}
     >
       {props.data.map((c: Character, index: number) => (
-        <Grid item xs={"auto"} sm={"auto"} md={"auto"} key={index}>
-          <CharacterCard character={c} />
+        <Grid
+          item
+          xs={"auto"}
+          sm={"auto"}
+          md={"auto"}
+          key={index}
+          data-testid="characters-grid"
+        >
+          <CharacterCard character={c} data-testid="character-card" />
         </Grid>
       ))}
     </Grid>

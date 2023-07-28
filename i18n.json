@@ -1,0 +1,19 @@
+{
+  "locales": ["en", "fr", "pt-br"],
+  "defaultLocale": "en",
+  "localeDetection": true,
+  "pages": {
+    "*": ["common"],
+    "/[lang]": ["page", "layout"]
+  },
+  "domains": [
+    {
+      "domain": "/",
+      "defaultLocale": "en"
+    },
+    {
+      "domain": "/fr",
+      "defaultLocale": "fr"
+    }
+  ]
+}

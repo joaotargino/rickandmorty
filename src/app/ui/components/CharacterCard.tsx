@@ -68,7 +68,11 @@ export const CharacterCard: React.FC<{ character: Character }> = (props) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={handleClickOpen}>
+            <Button
+              size="small"
+              onClick={handleClickOpen}
+              data-testid="open-close-card-button"
+            >
               {cardButtonText}
             </Button>
           </CardActions>

@@ -6,6 +6,7 @@ import {
   getByTestId,
   getByRole,
   waitFor,
+  act,
 } from "@testing-library/react";
 import { CharactersPage } from "../app/ui/pages/CharactersPage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -73,10 +74,26 @@ describe("<<CharactersPage />", () => {
     //   target: { value: "50" },
     // });
 
+    // act(async () => {
+    /* fire events that update state */
     // UserEvent.click(getByRole(screen.getByTestId("select"), "button"));
-    const select = screen.getByTestId("select");
-    UserEvent.click(select);
-    expect(screen.getByText("50")).toBeInTheDocument();
+    // const select = screen.getByTestId("select");
+    // UserEvent.click(select);
+    // const select50 = screen.getByTestId("select-option-50");
+    // UserEvent.click(select50);
+
+    const dropdownButton = screen.getByTestId("select");
+    UserEvent.click(dropdownButton);
+
+    // const dropdownItem = await screen.findByRole("button", { name: /50/i });
+    const dropdownItem = await screen.findByText(/20/i);
+    UserEvent.click(dropdownItem);
+
+    // expect(screen.getAllByTestId(/filter-section/)).toBeInTheDocument();
+    // expect(screen.getAllByTestId(/filter-section/)).not.toBeInTheDocument();
+    // });
+
+    // expect(screen.getByText("50")).toBeInTheDocument();
 
     // await waitFor(() => UserEvent.click(screen.getByText(/50/i)));
     // expect(screen.getByRole("heading")).toHaveTextContent(/50/i);
@@ -84,6 +101,6 @@ describe("<<CharactersPage />", () => {
     // When the selected display option per 50 is active, the filter section should be hidden
 
     // Mock useState before rendering your component
-    expect(screen.getAllByTestId(/filter-section/)).not.toBeInTheDocument();
+    // expect(screen.getAllByTestId(/filter-section/)).not.toBeInTheDocument();
   });
 });

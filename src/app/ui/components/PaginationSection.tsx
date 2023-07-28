@@ -22,6 +22,7 @@ export const PaginationSection: React.FC<{
         variant="contained"
         onClick={() => props.setPage(props.page - 1)}
         disabled={!props.hasPrevious}
+        data-testid="previous-page-button"
       >
         Previous
       </Button>
@@ -30,6 +31,7 @@ export const PaginationSection: React.FC<{
         variant="contained"
         onClick={() => props.setPage(props.page + 1)}
         disabled={!props.hasNext}
+        data-testid="next-page-button"
       >
         Next
       </Button>
