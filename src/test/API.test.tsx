@@ -62,7 +62,7 @@ const characters: Character[] = [
   },
 ];
 
-const BASE_URL = "https://rickandmortyapi.com/api/character";
+const BASE_URL = "https://rickandmortyapi.com/api";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -72,7 +72,7 @@ const axiosInstance = axios.create({
 
 const renderComponent = () => render(<Home />);
 
-describe("<CharactersPage />", () => {
+describe("API test starting from <Home /> and loading grid of characters", () => {
   // var axios = require("axios");
 
   // This sets the mock adapter on the default instance
@@ -91,8 +91,6 @@ describe("<CharactersPage />", () => {
   afterEach(cleanup);
 
   it("renders users when API call succeeds", async () => {
-    // Mock GET request to /users when param `searchText` is 'John'
-    // arguments for reply are (status, data, headers)
     mock.onGet("/character").reply(200, characters);
 
     const { queryByText, getAllByTestId } = renderComponent();
@@ -118,6 +116,8 @@ describe("<CharactersPage />", () => {
   });
 
   it("renders error when API call fails", async () => {
+    mock.onGet("/character").reply(404, characters);
+
     // Returns a failed promise with Error('Network Error');
     mock.onGet("/character").networkError();
 
